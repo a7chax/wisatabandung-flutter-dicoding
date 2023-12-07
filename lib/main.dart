@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key}) : super(key:key);
@@ -74,7 +76,8 @@ class DetailScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16.0),
             ),
-          )  
+          ),
+
         ],
       )) 
     );
