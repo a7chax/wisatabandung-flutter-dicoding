@@ -78,6 +78,12 @@ flutter:
     - family: Oswald
       fonts:
        - asset: fonts/Oswald/Oswald-Regular.ttf
+    - family: Staatliches
+      fonts:
+        - asset: fonts/Staatliches/Staatliches-Regular.ttf
+    - family: Oxygen
+      fonts:
+        - asset : fonts/Oxygen/Oxygen-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
