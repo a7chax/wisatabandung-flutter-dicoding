@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wisatabandung/detail_screen.dart';
+import 'package:wisatabandung/main_screen.dart';
 
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Wisata bandung',
       theme: ThemeData(),
-      home: const DetailScreen(),
+      home: MainScreen(),
     );
   }
 }
