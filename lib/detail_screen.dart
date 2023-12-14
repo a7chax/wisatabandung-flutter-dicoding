@@ -1,48 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wisatabandung/model/tourism_place.dart';
 
-  var informationTextStyle = const TextStyle(fontFamily: 'Oxygen');
-
-class FavoriteButton extends StatefulWidget {
-  
-  const FavoriteButton({Key? key}) : super(key: key);
-
-  @override
-  _FavoriteButtonState createState() =>_FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
-
-  
-  @override
-  Widget build(BuildContext context){
-    return IconButton(
-      icon: Icon(
-          isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: Colors.red,
-        ),
-      onPressed: () {
-        setState(() {
-          isFavorite =!isFavorite;
-        });
-      },
-    );
-  }
-}
+var informationTextStyle = const TextStyle(fontFamily: 'Oxygen');
 
 class DetailScreen extends StatelessWidget {
   final TourismPlace place;
 
-  const DetailScreen({Key? key, required this.place}) : super(key:key);
+  const DetailScreen({Key? key, required this.place}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if(constraints.maxWidth > 800){
-          return DetailScreenWebPage(place: place);
-        }else{
+        if (constraints.maxWidth > 800) {
+          return DetailWebPage(place: place);
+        } else {
           return DetailMobilePage(place: place);
         }
       },
@@ -53,183 +26,159 @@ class DetailScreen extends StatelessWidget {
 class DetailMobilePage extends StatelessWidget {
   final TourismPlace place;
 
-
-  const DetailMobilePage({Key? key,required this.place}) : super(key:key);
+  const DetailMobilePage({Key? key, required this.place}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-
-
-    Size screenSize = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
-    
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child:  Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Image.asset(place.imageAsset),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }, 
-                        icon: const Icon(Icons.arrow_back)
-                        ),                    
-                      ) ,
-                      const FavoriteButton()                                           
-                    ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Image.asset(place.imageAsset),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        const FavoriteButton(),
+                      ],
+                    ),
                   ),
-                )
-              ),          
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top : 16.0),
-            child:  Text(
-              place.name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Staatliches'
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[                
-                Column(
-                  children: <Widget>[
-                    Icon(Icons.calendar_today),
-                    SizedBox(height: 8.0),
-                    Text(
-                      place.openDays,
-                        style: informationTextStyle,                      
-                    )
-                  ],
                 ),
-                 Column(
-                  children: <Widget>[
-                    Icon(Icons.access_time),
-                    SizedBox(height: 8.0),
-                    Text(
-                      place.openTime,
-                      style: informationTextStyle,                                          
-                    )
-                  ],
-                ),
-                  Column(
-                  children: <Widget>[
-                    Icon(Icons.monetization_on),
-                    SizedBox(height: 8.0),
-                    Text(
-                      place.ticketPrice,
-                      style: informationTextStyle,                                          
-                    )
-                  ],
-                ),                
               ],
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              place.description,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16.0),
+            Container(
+              margin: const EdgeInsets.only(top: 16.0),
+              child: Text(
+                place.name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 30.0,
+                  fontFamily: 'Staatliches',
+                ),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 150,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg'
-                    ),
-                  ) , 
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      const Icon(Icons.calendar_today),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        place.openDays,
+                        style: informationTextStyle,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      const Icon(Icons.access_time),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        place.openTime,
+                        style: informationTextStyle,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      const Icon(Icons.monetization_on),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        place.ticketPrice,
+                        style: informationTextStyle,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                place.description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'Oxygen',
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
+              ),
+            ),
+            SizedBox(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: place.imageUrls.map((url) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                      'https://media-cdn.tripadvisor.com/media/photo-w/13/f0/22/f6/photo3jpg.jpg'
+                      child: Image.network(url),
                     ),
-                  ), 
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                      'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/a9/33/43/liburan-di-farmhouse.jpg'
-                    ),
-                  ), 
-                ),                           
-            ],
-          ),
-          )
-    
-
-        ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
-        ) 
     );
   }
 }
 
-class DetailScreenWebPage extends StatefulWidget{
+class DetailWebPage extends StatefulWidget {
   final TourismPlace place;
 
-  const DetailScreenWebPage({Key? key, required this.place}) : super(key: key);
+  const DetailWebPage({Key? key, required this.place}) : super(key: key);
 
   @override
-  _DetailScreenWebPageState createState() => _DetailScreenWebPageState(place: place);
+  _DetailWebPageState createState() => _DetailWebPageState();
 }
 
-class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
-   final _scrollController = ScrollController();
-  final TourismPlace place;
-  _DetailScreenWebPageState({Key? key, this.place}) : super(key: key);
-
+class _DetailWebPageState extends State<DetailWebPage> {
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(      
+    return Scaffold(
+      appBar: kIsWeb ? null : AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 16,
-          horizontal: 64
+          horizontal: 64,
         ),
         child: Center(
           child: SizedBox(
-            width: 1200,
-            child:  Column(
+            width: screenWidth <= 1200 ? 800 : 1200,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 const Text(
                   'Wisata Bandung',
                   style: TextStyle(
                     fontFamily: 'Staatliches',
-                    fontSize: 32
+                    fontSize: 32,
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -238,35 +187,34 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                   children: [
                     Expanded(
                       child: Column(
-                      children: [
-                        ClipRRect(
-                          child: Image.asset(place.imageAsset),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        const SizedBox(height: 16),
-                        Scrollbar(
-                          controller: _scrollController,
-                          child: Container(
-                          height: 150,
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: ListView(
-                            controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
-                            children: place.imageUrls.map((url) {
-                              return Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(url),
-                                ),
-                              );
-                            }).toList(),
+                        children: [
+                          ClipRRect(
+                            child: Image.asset(widget.place.imageAsset),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                        ),
-   
-                      ],
-                    ),
+                          const SizedBox(height: 16),
+                          Scrollbar(
+                            controller: _scrollController,
+                            child: Container(
+                              height: 150,
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: ListView(
+                                controller: _scrollController,
+                                scrollDirection: Axis.horizontal,
+                                children: widget.place.imageUrls.map((url) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(url),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: 32),
                     Expanded(
@@ -276,25 +224,24 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              Container(
-                                child: Text(
-                                  place.name,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 30.0,
-                                    fontFamily: 'Staatliches',
-                                  ),
+                              Text(
+                                widget.place.name,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 30.0,
+                                  fontFamily: 'Staatliches',
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: <Widget>[
                                       const Icon(Icons.calendar_today),
                                       const SizedBox(width: 8.0),
                                       Text(
-                                        place.openDays,
+                                        widget.place.openDays,
                                         style: informationTextStyle,
                                       ),
                                     ],
@@ -307,7 +254,7 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                                   const Icon(Icons.access_time),
                                   const SizedBox(width: 8.0),
                                   Text(
-                                    place.openTime,
+                                    widget.place.openTime,
                                     style: informationTextStyle,
                                   ),
                                 ],
@@ -318,7 +265,7 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                                   const Icon(Icons.monetization_on),
                                   const SizedBox(width: 8.0),
                                   Text(
-                                    place.ticketPrice,
+                                    widget.place.ticketPrice,
                                     style: informationTextStyle,
                                   ),
                                 ],
@@ -326,7 +273,7 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                                 child: Text(
-                                  place.description,
+                                  widget.place.description,
                                   textAlign: TextAlign.justify,
                                   style: const TextStyle(
                                     fontSize: 16.0,
@@ -338,14 +285,14 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 
@@ -356,4 +303,28 @@ class _DetailScreenWebPageState extends State<DetailScreenWebPage> {
   }
 }
 
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({Key? key}) : super(key: key);
 
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
+    );
+  }
+}
